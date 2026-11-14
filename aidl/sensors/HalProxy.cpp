@@ -16,6 +16,8 @@
 
 #include "HalProxy.h"
 
+#include "FusedLightSensor.h"
+
 #include <android/hardware/sensors/2.0/types.h>
 
 #include <android-base/file.h>
@@ -45,6 +47,9 @@ typedef V2_0::implementation::ISensorsSubHal*(SensorsHalGetSubHalFunc)(uint32_t*
 typedef V2_1::implementation::ISensorsSubHal*(SensorsHalGetSubHalV2_1Func)(uint32_t*);
 
 static constexpr int32_t kBitsAfterSubHalIndex = 24;
+
+// There is one HalProxy per process, which owns the fused light sensor
+static FusedLightSensor sFusedLight;
 
 /**
  * Set the subhal index as first byte of sensor handle and return this modified version.
@@ -179,6 +184,9 @@ Return<Result> HalProxy::setOperationMode(OperationMode mode) {
 }
 
 Return<Result> HalProxy::activate(int32_t sensorHandle, bool enabled) {
+    if (sFusedLight.handles(sensorHandle)) {
+        return sFusedLight.activate(sensorHandle, enabled);
+    }
     if (!isSubHalIndexValid(sensorHandle)) {
         return Result::BAD_VALUE;
     }
@@ -296,6 +304,9 @@ Return<Result> HalProxy::initializeCommon(
 
 Return<Result> HalProxy::batch(int32_t sensorHandle, int64_t samplingPeriodNs,
                                int64_t maxReportLatencyNs) {
+    if (sFusedLight.handles(sensorHandle)) {
+        return sFusedLight.batch(sensorHandle, samplingPeriodNs, maxReportLatencyNs);
+    }
     if (!isSubHalIndexValid(sensorHandle)) {
         return Result::BAD_VALUE;
     }
@@ -304,6 +315,15 @@ Return<Result> HalProxy::batch(int32_t sensorHandle, int64_t samplingPeriodNs,
 }
 
 Return<Result> HalProxy::flush(int32_t sensorHandle) {
+    if (sFusedLight.isFused(sensorHandle)) {
+        // It has no FIFO, so it's flushed right away
+        sp<V2_0::implementation::HalProxyCallbackBase> callback =
+                new V2_0::implementation::HalProxyCallbackBase(
+                        this, this, static_cast<uint32_t>(sensorHandle) >> kBitsAfterSubHalIndex);
+        callback->postEvents({sFusedLight.flushCompleteEvent()},
+                             callback->createScopedWakelock(false /* lock */));
+        return Result::OK;
+    }
     if (!isSubHalIndexValid(sensorHandle)) {
         return Result::BAD_VALUE;
     }
@@ -530,6 +550,17 @@ void HalProxy::initializeSensorList() {
                   mSubHalList[subHalIndex]->getName().c_str());
         }
     }
+
+    sFusedLight.addTo(
+            mSensors,
+            [this](int32_t handle, bool enabled) {
+                return getSubHalForSensorHandle(handle)->activate(clearSubHalIndex(handle),
+                                                                  enabled);
+            },
+            [this](int32_t handle, int64_t periodNs, int64_t latencyNs) {
+                return getSubHalForSensorHandle(handle)->batch(clearSubHalIndex(handle), periodNs,
+                                                               latencyNs);
+            });
 }
 
 void* HalProxy::getHandleForSubHalSharedObject(const std::string& filename) {
@@ -684,8 +715,12 @@ void HalProxy::resetSharedWakelock() {
     mWakelockTimeoutResetTime = getTimeNow();
 }
 
-void HalProxy::postEventsToMessageQueue(const std::vector<Event>& events, size_t numWakeupEvents,
+void HalProxy::postEventsToMessageQueue(const std::vector<Event>& sourceEvents,
+                                        size_t numWakeupEvents,
                                         V2_0::implementation::ScopedWakelock wakelock) {
+    // The fused light sensor only adds and drops non-wake-up events
+    const std::vector<Event> events = sFusedLight.process(sourceEvents);
+    if (events.empty()) return;
     size_t numToWrite = 0;
     std::lock_guard<std::mutex> lock(mEventQueueWriteMutex);
     if (wakelock.isLocked()) {
