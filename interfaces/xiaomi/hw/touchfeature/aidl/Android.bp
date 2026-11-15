@@ -1,0 +1,30 @@
+//
+// SPDX-FileCopyrightText: The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Only the Java client: the service and its NDK library are prebuilts
+aidl_interface {
+    name: "vendor.xiaomi.hw.touchfeature",
+    srcs: ["vendor/xiaomi/hw/touchfeature/*.aidl"],
+    stability: "vintf",
+    owner: "xiaomi",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+        java: {
+            platform_apis: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+    frozen: true,
+}
