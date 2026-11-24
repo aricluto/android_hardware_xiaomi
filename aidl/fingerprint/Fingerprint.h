@@ -13,6 +13,8 @@
 #include "LockoutTracker.h"
 #include "Session.h"
 #include "UdfpsHandler.h"
+#include <vector>
+#include <memory>
 
 using ::aidl::android::hardware::biometrics::fingerprint::FingerprintSensorType;
 using ::aidl::android::hardware::biometrics::fingerprint::ISession;

@@ -43,6 +43,7 @@
 #include <vector>
 
 #include "effect.h"
+#include <memory>
 
 using aidl::android::hardware::vibrator::Effect;
 

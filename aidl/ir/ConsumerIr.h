@@ -6,6 +6,7 @@
 #pragma once
 
 #include <aidl/android/hardware/ir/BnConsumerIr.h>
+#include <vector>
 
 namespace aidl::android::hardware::ir {
 

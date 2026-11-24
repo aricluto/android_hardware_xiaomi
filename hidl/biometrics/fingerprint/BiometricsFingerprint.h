@@ -8,6 +8,7 @@
 #pragma once
 
 #include <android/hardware/biometrics/fingerprint/2.3/IBiometricsFingerprint.h>
+#include <mutex>
 #include <android/log.h>
 #include <hardware/hardware.h>
 #include <hidl/MQDescriptor.h>

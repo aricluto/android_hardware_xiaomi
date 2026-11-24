@@ -15,12 +15,16 @@
  */
 
 #include "Sensors.h"
+#include <mutex>
 #include "convert.h"
 #include "multihal.h"
 
 #include <android-base/logging.h>
 
 #include <sys/stat.h>
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace android {
 namespace hardware {

@@ -6,6 +6,7 @@
 #define LOG_TAG "FusedLightSensor"
 
 #include "FusedLightSensor.h"
+#include <mutex>
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
@@ -15,6 +16,8 @@
 
 #include <algorithm>
 #include <memory>
+#include <vector>
+#include <string>
 
 namespace android {
 namespace hardware {

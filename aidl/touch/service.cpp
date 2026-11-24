@@ -12,6 +12,8 @@
 #include <android-base/logging.h>
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
+#include <string>
+#include <memory>
 
 using aidl::vendor::lineage::touch::HighTouchPollingRate;
 using aidl::vendor::lineage::touch::KeyDisabler;

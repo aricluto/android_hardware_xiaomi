@@ -17,6 +17,7 @@
 #include "HalProxyCallback.h"
 
 #include <cinttypes>
+#include <vector>
 
 namespace android {
 namespace hardware {

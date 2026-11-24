@@ -20,6 +20,8 @@
 
 #include "Sensor.h"
 #include "V2_1/SubHal.h"
+#include <string>
+#include <memory>
 
 namespace android {
 namespace hardware {

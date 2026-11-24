@@ -19,6 +19,7 @@
 #include <android/hardware/sensors/2.1/types.h>
 #include <cutils/properties.h>
 #include <log/log.h>
+#include <vector>
 
 using ::android::hardware::sensors::V2_1::implementation::ISensorsSubHal;
 using ::android::hardware::sensors::V2_1::subhal::implementation::SensorsSubHal;

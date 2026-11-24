@@ -8,6 +8,7 @@
 #define LOG_TAG "android.hardware.biometrics.fingerprint@2.3-service.xiaomi"
 
 #include <hardware/hw_auth_token.h>
+#include <mutex>
 
 #include <android-base/strings.h>
 #include <hardware/hardware.h>
@@ -17,6 +18,8 @@
 #include <android-base/properties.h>
 #include <inttypes.h>
 #include <unistd.h>
+#include <vector>
+#include <string>
 
 namespace {
 

@@ -20,6 +20,8 @@
 
 #include "LockoutTracker.h"
 #include "UdfpsHandler.h"
+#include <vector>
+#include <memory>
 
 using ::aidl::android::hardware::biometrics::common::ICancellationSignal;
 using ::aidl::android::hardware::biometrics::common::OperationContext;

@@ -1,41 +1,30 @@
-/*
- * SPDX-FileCopyrightText: The LineageOS Project
- * SPDX-License-Identifier: Apache-2.0
- */
-
 package vendor.xiaomi.hardware.misys.common;
 
 import vendor.xiaomi.hardware.misys.common.Ashmem;
 import vendor.xiaomi.hardware.misys.common.FileInfo;
 import vendor.xiaomi.hardware.misys.common.IVCameraCallback;
 
-/**
- * File and system helper used by Xiaomi system apps to reach vendor
- * locations. Every method that takes a path and a name operates on
- * path + "/" + name.
- */
 @VintfStability
 interface IMiSysImpl {
-    FileInfo[] DirListFiles(in String path);
-    void EraseFileOrDirectory(in String path, in String name);
-    String MiSysReadFile(in String path, in String name);
-    void MiSysWriteFile(in String path, in String name, in String content, in int size, in byte append);
-    boolean IsExists(in String path, in String name);
-    void MiSysCreateFolder(in String path, in String name);
-    byte[] MiSysReadBuffer(in String path, in String name);
-    void MiSysWriteBuffer(in String path, in String name, in byte[] buffer, in long size);
-    boolean SetVirtualCameraConfig(in int width, in int height, in double fps);
+    FileInfo[] DirListFiles(String path);
+    void EraseFileOrDirectory(String path, String file_name);
+    String MiSysReadFile(String path, String file_name);
+    void MiSysWriteFile(String path, String file_name, String writebuf, int sbuf_len, byte append_data);
+    boolean IsExists(String path, String file_name);
+    void MiSysCreateFolder(String path, String folder_name);
+    byte[] MiSysReadBuffer(String path, String file_name);
+    void MiSysWriteBuffer(String path, String file_name, in byte[] writebuf, long buf_len);
+    boolean SetVirtualCameraConfig(int width, int height, double frameRate);
     boolean ConnectVirtualCamera();
     boolean DisconnectVirtualCamera();
-    boolean OnFrameData(in byte[] data, in int size);
-    void RegisterVCameraCallback(in IVCameraCallback callback);
+    boolean OnFrameData(in byte[] data, int len);
+    void RegisterVCameraCallback(IVCameraCallback callback);
     void UnregisterVCameraCallback();
-    long GetFileSize(in String path, in String name);
-    void MiSysSetProp(in String key, in String value);
-    void ReadFromFile(in Ashmem ashmem, in String path, in String name);
-    void WriteToFile(in Ashmem ashmem, in String path, in String name, in long size);
-    long GetPartitionSize(in String path, in String name);
-    void MiSysCreateFolderMode(in String path, in String name, in int mode);
-    void CopyFile(in String src, in String dst);
-    FileInfo[] DirIntgrFiles(in String path);
+    long GetFileSize(String path, String fileName);
+    void MiSysSetProp(String key, String value);
+    void ReadFromFile(in Ashmem block, String path, String fileName);
+    void WriteToFile(in Ashmem block, String path, String fileName, long size);
+    long GetPartitionSize(String path, String partitionName);
+    void MiSysCreateFolderMode(String path, String folder_name, int permission);
+    void CopyFile(String inpath, String outpath);
 }

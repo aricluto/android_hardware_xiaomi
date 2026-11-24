@@ -6,6 +6,9 @@
 #pragma once
 
 #include <aidl/vendor/xiaomi/hardware/misys/common/BnMiSysImpl.h>
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace aidl::vendor::xiaomi::hardware::misys::common {
 

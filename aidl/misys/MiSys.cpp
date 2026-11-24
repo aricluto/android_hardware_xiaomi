@@ -22,6 +22,9 @@
 #include <cstring>
 #include <filesystem>
 #include <optional>
+#include <vector>
+#include <string>
+#include <memory>
 
 using android::base::Dirname;
 using android::base::ReadFully;

@@ -17,6 +17,8 @@
 
 #include <algorithm>
 #include <vector>
+#include <string>
+#include <memory>
 
 using ::android::base::GetProperty;
 using ::android::base::SetProperty;

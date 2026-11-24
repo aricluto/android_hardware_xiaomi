@@ -11,6 +11,8 @@
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
 #include <sys/stat.h>
+#include <string>
+#include <memory>
 
 using aidl::vendor::xiaomi::hardware::misys::common::MiSys;
 

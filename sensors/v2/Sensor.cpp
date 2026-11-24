@@ -15,12 +15,15 @@
  */
 
 #include "Sensor.h"
+#include <mutex>
 
 #include <hardware/sensors.h>
 #include <log/log.h>
 #include <utils/SystemClock.h>
 
 #include <cmath>
+#include <vector>
+#include <string>
 
 namespace {
 

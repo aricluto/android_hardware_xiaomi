@@ -1,7 +1,3 @@
-/*
- * SPDX-FileCopyrightText: The LineageOS Project
- * SPDX-License-Identifier: Apache-2.0
- */
 ///////////////////////////////////////////////////////////////////////////////
 // THIS FILE IS IMMUTABLE. DO NOT EDIT IN ANY CASE.                          //
 ///////////////////////////////////////////////////////////////////////////////
@@ -23,5 +19,5 @@
 package vendor.xiaomi.hardware.misys.common;
 @VintfStability
 interface IVCameraCallback {
-  oneway void stateChangeTo(int state);
+  void stateChangeTo(int state);
 }

@@ -10,6 +10,9 @@
 #include "Session.h"
 
 #include "CancellationSignal.h"
+#include <vector>
+#include <memory>
+#include <functional>
 
 namespace aidl::android::hardware::biometrics::fingerprint {
 

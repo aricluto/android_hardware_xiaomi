@@ -15,6 +15,7 @@
  */
 
 #include "HalProxy.h"
+#include <mutex>
 
 #include "FusedLightSensor.h"
 
@@ -30,6 +31,9 @@
 #include <fstream>
 #include <functional>
 #include <thread>
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace android {
 namespace hardware {

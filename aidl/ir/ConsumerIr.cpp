@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include "SpiPattern.h"
+#include <vector>
 
 using android::base::unique_fd;
 

@@ -27,6 +27,7 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <string>
 
 using ::android::hardware::sensors::V1_0::OperationMode;
 using ::android::hardware::sensors::V1_0::Result;

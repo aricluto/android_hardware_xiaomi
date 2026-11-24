@@ -4,6 +4,7 @@
  */
 
 #include "SpiPattern.h"
+#include <vector>
 
 namespace aidl::android::hardware::ir {
 
